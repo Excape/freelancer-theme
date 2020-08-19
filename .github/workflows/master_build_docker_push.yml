@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+          with:
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+            repository: excape/sophie-site/sophie-site
+            registry: docker.pkg.github.com
+            tag_with_ref: false
